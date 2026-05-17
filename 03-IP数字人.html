@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行业IP数字人定制 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #2d1b69 0%, #5b2a86 50%, #8b5cf6 100%); color: #fff; padding: 40px 30px; }
+.tag { display: inline-block; background: #a855f7; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #faf5ff, #f3e8ff); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #7c3aed; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; }
+.sku-item.active { border-color: #7c3aed; color: #7c3aed; background: #faf5ff; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #7c3aed; }
+.section-title span { color: #7c3aed; }
+.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.demo-card { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-radius: 16px; padding: 24px 16px; text-align: center; }
+.demo-card .avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #7c3aed); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+.demo-card h4 { font-size: 14px; margin-bottom: 4px; }
+.demo-card .role { font-size: 12px; color: #7c3aed; margin-bottom: 6px; }
+.demo-card p { font-size: 11px; color: #888; line-height: 1.5; }
+.chat-demo { background: #f8f8f8; border-radius: 12px; padding: 20px; margin-top: 16px; }
+.chat-bubble { max-width: 80%; padding: 10px 14px; border-radius: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+.chat-user { background: #7c3aed; color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
+.chat-ai { background: #fff; border: 1px solid #eee; border-bottom-left-radius: 4px; }
+.chat-label { font-size: 11px; color: #999; margin-bottom: 4px; }
+.chat-label.right { text-align: right; }
+.include-list { list-style: none; }
+.include-list li { padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.include-list li::before { content: '✓'; color: #7c3aed; font-weight: 700; font-size: 16px; }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #2d1b69; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #7c3aed, #a855f7); color: #fff; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; }
+.cta-bar .btn-outline { background: none; border: 2px solid #7c3aed; color: #7c3aed; padding: 10px 24px; border-radius: 24px; font-size: 14px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">IP数字人</span>
+  <h1>行业IP数字人定制 AI分身助理 品牌人设打造 知识库问答 7×24在线</h1>
+  <div class="subtitle">把你的专业经验变成永不下线的AI分身</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择定制方案</h3>
+  <div class="sku-item active">人设定制</div>
+  <div class="sku-item">知识库版</div>
+  <div class="sku-item">全能助理</div>
+  <div class="sku-item">企业旗舰</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="section-title">你的行业<span>AI分身</span></div>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <div class="avatar">👨‍⚕️</div>
+        <h4>陈医生AI</h4>
+        <div class="role">皮肤科顾问</div>
+        <p>自动回复患者咨询<br>分诊建议/用药提醒</p>
+      </div>
+      <div class="demo-card">
+        <div class="avatar">👩‍🏫</div>
+        <h4>林老师AI</h4>
+        <div class="role">英语私教</div>
+        <p>24小时口语陪练<br>作业批改/语法纠错</p>
+      </div>
+      <div class="demo-card">
+        <div class="avatar">👨‍💼</div>
+        <h4>张律师AI</h4>
+        <div class="role">法律顾问</div>
+        <p>合同初审/法规查询<br>案例检索/风险预警</p>
+      </div>
+      <div class="demo-card">
+        <div class="avatar">👩‍🍳</div>
+        <h4>王营养师AI</h4>
+        <div class="role">健康管理</div>
+        <p>饮食方案定制<br>营养咨询/食谱推荐</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">对话<span>效果演示</span></div>
+    <div class="chat-demo">
+      <div class="chat-label right">用户</div>
+      <div class="chat-bubble chat-user">张律师，我签了个租房合同，房东说提前退租要赔3个月房租，合理吗？</div>
+      <div class="chat-label">张律师AI</div>
+      <div class="chat-bubble chat-ai">您好！关于提前退租的违约金，需要看几个要点：<br><br>1. 合同是否约定了违约金条款及具体金额<br>2. 根据《民法典》第585条，约定的违约金过高（超过实际损失30%），可以请求法院或仲裁机构适当减少<br>3. 3个月房租作为违约金是否合理，要看剩余租期和房东实际损失<br><br>建议您把合同相关条款拍照发我，我帮您做个详细分析 📋</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>内容</span></div>
+    <ul class="include-list">
+      <li>深度访谈，提炼你的专业知识和沟通风格</li>
+      <li>定制专属人设 Prompt（性格/语气/专业边界）</li>
+      <li>构建行业知识库（上传你的文档/案例/FAQ）</li>
+      <li>部署到微信/网页/API 等渠道</li>
+      <li>对话效果调优（至少3轮迭代）</li>
+      <li>交付人设文档 + 知识库管理后台</li>
+      <li>教会你自己更新知识库内容</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">🎭</div><p>人设不满意<br>免费重做</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>3轮迭代<br>直到满意</p></div>
+      <div class="guarantee-item"><div class="icon">📚</div><p>知识库<br>自主可控</p></div>
+      <div class="guarantee-item"><div class="icon">💬</div><p>30天<br>售后答疑</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 让你的专业经验永不下线<br>
+  拍前联系客服，描述您的行业和角色定位
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">咨询客服</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即定制</a>
+</div>
+
+</div>
+</body>
+</html>

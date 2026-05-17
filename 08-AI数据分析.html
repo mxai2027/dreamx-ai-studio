@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI数据分析报告 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%); color: #fff; padding: 40px 30px; }
+.tag { display: inline-block; background: #818cf8; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #eef2ff, #e0e7ff); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #4338ca; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; }
+.sku-item.active { border-color: #4338ca; color: #4338ca; background: #eef2ff; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #6366f1; }
+.section-title span { color: #4338ca; }
+.scene-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.scene-card { background: #eef2ff; border-radius: 12px; padding: 20px; }
+.scene-card .icon { font-size: 28px; margin-bottom: 6px; }
+.scene-card h4 { font-size: 14px; margin-bottom: 4px; }
+.scene-card p { font-size: 12px; color: #666; line-height: 1.5; }
+.deliverable { background: #f8f9ff; border-radius: 12px; padding: 20px; margin-bottom: 12px; display: flex; gap: 16px; align-items: flex-start; }
+.deliverable .num { width: 36px; height: 36px; background: linear-gradient(135deg, #6366f1, #4338ca); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.deliverable h4 { font-size: 15px; margin-bottom: 3px; }
+.deliverable p { font-size: 13px; color: #888; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th { background: #312e81; color: #fff; padding: 12px 8px; text-align: center; }
+.compare-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+.compare-table tr:nth-child(even) { background: #eef2ff; }
+.check { color: #6366f1; font-weight: 700; }
+.cross { color: #ccc; }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #312e81; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #4338ca, #6366f1); color: #fff; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; }
+.cta-bar .btn-outline { background: none; border: 2px solid #4338ca; color: #4338ca; padding: 10px 24px; border-radius: 24px; font-size: 14px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">AI数据分析</span>
+  <h1>AI数据分析报告定制 竞品分析/用户画像/市场调研 用数据驱动决策</h1>
+  <div class="subtitle">给你一份数据，AI帮你看透行业、读懂用户</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择报告类型</h3>
+  <div class="sku-item active">单项报告</div>
+  <div class="sku-item">深度报告</div>
+  <div class="sku-item">全景分析</div>
+  <div class="sku-item">长期监控</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="section-title">分析<span>场景</span></div>
+    <div class="scene-grid">
+      <div class="scene-card"><div class="icon">🔍</div><h4>竞品分析</h4><p>对标竞品产品/价格/营销策略，找到差异化机会</p></div>
+      <div class="scene-card"><div class="icon">👥</div><h4>用户画像</h4><p>用户评论/行为数据分析，洞察真实需求</p></div>
+      <div class="scene-card"><div class="icon">📈</div><h4>市场趋势</h4><p>行业数据+社媒热度分析，预判趋势</p></div>
+      <div class="scene-card"><div class="icon">💬</div><h4>舆情监控</h4><p>品牌口碑/负面预警/竞品动态追踪</p></div>
+      <div class="scene-card"><div class="icon">🛒</div><h4>电商选品</h4><p>类目数据/价格带/爆款因子分析</p></div>
+      <div class="scene-card"><div class="icon">📊</div><h4>经营诊断</h4><p>销售/财务/运营数据，AI出诊断报告</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">交付<span>内容</span></div>
+    <div class="deliverable"><div class="num">1</div><div><h4>数据采集</h4><p>从公开渠道采集相关数据（电商平台/社媒/行业报告）</p></div></div>
+    <div class="deliverable"><div class="num">2</div><div><h4>AI分析处理</h4><p>数据清洗 + AI结构化分析 + 可视化图表</p></div></div>
+    <div class="deliverable"><div class="num">3</div><div><h4>洞察报告</h4><p>PDF报告（15-30页），含数据图表+关键洞察+行动建议</p></div></div>
+    <div class="deliverable"><div class="num">4</div><div><h4>数据源文件</h4><p>原始数据表格（Excel），方便二次分析</p></div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">版本<span>对比</span></div>
+    <table class="compare-table">
+      <tr><th>内容</th><th>单项</th><th>深度</th><th>全景</th></tr>
+      <tr><td>分析维度</td><td>1个</td><td>3个</td><td>全覆盖</td></tr>
+      <tr><td>竞品数量</td><td>3个</td><td>10个</td><td>20个</td></tr>
+      <tr><td>报告页数</td><td>10页</td><td>25页</td><td>50页+</td></tr>
+      <tr><td>可视化图表</td><td>5张</td><td>15张</td><td>30张+</td></tr>
+      <tr><td>行动建议</td><td>概要</td><td>详细</td><td>含执行方案</td></tr>
+      <tr><td>原始数据</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>交付周期</td><td>3天</td><td>7天</td><td>15天</td></tr>
+      <tr><td>修改次数</td><td>1次</td><td>3次</td><td>不限</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">📋</div><p>报告不满意<br>免费修改</p></div>
+      <div class="guarantee-item"><div class="icon">🔒</div><p>数据保密<br>签NDA</p></div>
+      <div class="guarantee-item"><div class="icon">📊</div><p>数据源透明<br>可溯源</p></div>
+      <div class="guarantee-item"><div class="icon">⏰</div><p>准时交付<br>延期赔付</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 用数据说话，让决策有据可依<br>
+  拍前联系客服，告知您的分析需求
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">咨询客服</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即购买</a>
+</div>
+
+</div>
+</body>
+</html>

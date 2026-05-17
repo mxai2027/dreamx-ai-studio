@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI全套解决方案 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #000000 0%, #1a1a1a 30%, #c9a84c 100%); color: #fff; padding: 50px 30px; }
+.tag { display: inline-block; background: linear-gradient(90deg, #c9a84c, #f0d078); color: #000; font-size: 12px; padding: 4px 14px; border-radius: 12px; margin-bottom: 14px; font-weight: 700; letter-spacing: 1px; }
+.product-header h1 { font-size: 24px; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #fffef5, #fef9e7); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #b8860b; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; }
+.sku-item.active { border-color: #b8860b; color: #b8860b; background: #fffef5; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #c9a84c; }
+.section-title span { color: #b8860b; }
+.hero-text { text-align: center; padding: 20px 0; font-size: 16px; color: #666; line-height: 2; }
+.hero-text strong { color: #b8860b; font-size: 20px; }
+/* 全景图 */
+.panorama { position: relative; }
+.pano-layer { display: flex; align-items: center; gap: 12px; padding: 14px 16px; margin-bottom: 8px; border-radius: 12px; font-size: 14px; }
+.pano-layer .num { width: 32px; height: 32px; background: linear-gradient(135deg, #c9a84c, #b8860b); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.pano-layer:nth-child(1) { background: #fffef5; }
+.pano-layer:nth-child(2) { background: #fef9e7; }
+.pano-layer:nth-child(3) { background: #fdf3d0; }
+.pano-layer:nth-child(4) { background: #fcedba; }
+.pano-layer:nth-child(5) { background: #fbe7a3; }
+.pano-layer:nth-child(6) { background: #fae18d; }
+.pano-layer h4 { font-size: 14px; }
+.pano-layer p { font-size: 12px; color: #888; }
+/* 时间轴 */
+.roadmap { padding-left: 20px; border-left: 3px solid #c9a84c; }
+.roadmap-item { padding: 16px 0 16px 20px; position: relative; }
+.roadmap-item::before { content: ''; position: absolute; left: -11px; top: 22px; width: 16px; height: 16px; border-radius: 50%; background: #c9a84c; border: 3px solid #fff; }
+.roadmap-item h4 { font-size: 15px; margin-bottom: 3px; }
+.roadmap-item .time { font-size: 12px; color: #b8860b; margin-bottom: 4px; }
+.roadmap-item p { font-size: 13px; color: #888; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th { background: #1a1a1a; color: #c9a84c; padding: 12px 8px; text-align: center; }
+.compare-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+.compare-table tr:nth-child(even) { background: #fffef5; }
+.check { color: #b8860b; font-weight: 700; }
+.cross { color: #ccc; }
+.save-banner { background: linear-gradient(90deg, #1a1a1a, #2d2d2d); color: #fff; padding: 24px 30px; text-align: center; border-radius: 0; }
+.save-banner h3 { font-size: 18px; margin-bottom: 8px; }
+.save-banner .highlight { color: #f0d078; font-size: 24px; font-weight: 700; }
+.save-banner p { font-size: 13px; color: rgba(255,255,255,0.6); }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #000; color: rgba(255,255,255,0.5); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #b8860b, #c9a84c); color: #fff; border: none; padding: 14px 40px; border-radius: 24px; font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+.cta-bar .btn-outline { background: none; border: 2px solid #b8860b; color: #b8860b; padding: 10px 24px; border-radius: 24px; font-size: 14px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">旗舰方案</span>
+  <h1>AI全套解决方案 从0到1全程陪跑 部署+升级+获客+推广+培训 一站式交付</h1>
+  <div class="subtitle">不想东拼西凑？一个方案解决所有AI需求</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择方案规格</h3>
+  <div class="sku-item active">创业版</div>
+  <div class="sku-item">成长版</div>
+  <div class="sku-item">企业版</div>
+  <div class="sku-item">战略合伙</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="hero-text">
+      别人卖你一个工具<br>
+      我们给你<strong>一整套AI赋能体系</strong><br>
+      从基础设施到业务增长，全程陪跑
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">全景<span>服务地图</span></div>
+    <div class="panorama">
+      <div class="pano-layer"><span class="num">1</span><div><h4>AI基础设施部署</h4><p>本地大模型 + WebUI + API接口 + 知识库</p></div></div>
+      <div class="pano-layer"><span class="num">2</span><div><h4>业务流程AI化</h4><p>诊断核心流程，嵌入AI工具降本增效</p></div></div>
+      <div class="pano-layer"><span class="num">3</span><div><h4>IP数字人打造</h4><p>品牌AI分身 + 行业知识库 + 多渠道部署</p></div></div>
+      <div class="pano-layer"><span class="num">4</span><div><h4>AI内容+获客体系</h4><p>小红书/抖音/公众号 AI内容流水线 + 私域获客</p></div></div>
+      <div class="pano-layer"><span class="num">5</span><div><h4>AI客服+数据分析</h4><p>7×24智能客服 + 经营数据AI分析看板</p></div></div>
+      <div class="pano-layer"><span class="num">6</span><div><h4>团队AI培训</h4><p>全员Prompt培训 + AI工作手册 + 持续迭代</p></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">落地<span>路线图</span></div>
+    <div class="roadmap">
+      <div class="roadmap-item"><div class="time">第 1-2 周</div><h4>诊断 + 规划</h4><p>深入了解业务，出具AI升级全景方案</p></div>
+      <div class="roadmap-item"><div class="time">第 3-4 周</div><h4>基础设施搭建</h4><p>本地模型部署、知识库搭建、API对接</p></div>
+      <div class="roadmap-item"><div class="time">第 5-6 周</div><h4>业务流程改造</h4><p>核心流程AI化，IP数字人上线</p></div>
+      <div class="roadmap-item"><div class="time">第 7-8 周</div><h4>获客体系启动</h4><p>AI内容生产线、多平台分发、私域搭建</p></div>
+      <div class="roadmap-item"><div class="time">第 9-10 周</div><h4>团队培训</h4><p>全员AI培训、交付工作手册</p></div>
+      <div class="roadmap-item"><div class="time">持续</div><h4>陪跑优化</h4><p>数据复盘、策略迭代、新工具导入</p></div>
+    </div>
+  </div>
+
+  <div class="save-banner">
+    <h3>单独购买 vs 全套方案</h3>
+    <p>单独购买全部服务总价</p>
+    <div class="highlight" style="text-decoration:line-through;opacity:0.5;">分项叠加 · 总价高</div>
+    <p style="margin-top:8px;">全套方案价</p>
+    <div class="highlight">打包询价 · 一站式</div>
+    <p style="margin-top:8px;">节省超过 90%，还有专属客户经理全程跟进</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">版本<span>对比</span></div>
+    <table class="compare-table">
+      <tr><th>服务项</th><th>创业版</th><th>成长版</th><th>企业版</th><th>战略合伙</th></tr>
+      <tr><td>本地模型部署</td><td>1个</td><td>3个</td><td>5个</td><td>不限</td></tr>
+      <tr><td>业务流程AI化</td><td>1个场景</td><td>3个场景</td><td>全流程</td><td>全流程</td></tr>
+      <tr><td>IP数字人</td><td class="cross">✗</td><td>1个</td><td>3个</td><td>不限</td></tr>
+      <tr><td>获客平台</td><td>1个</td><td>2个</td><td>全平台</td><td>全平台</td></tr>
+      <tr><td>AI客服</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>数据分析</td><td class="cross">✗</td><td>月度</td><td>周度</td><td>实时</td></tr>
+      <tr><td>团队培训</td><td>1人</td><td>5人</td><td>全员</td><td>全员+复训</td></tr>
+      <tr><td>陪跑周期</td><td>30天</td><td>90天</td><td>180天</td><td>365天</td></tr>
+      <tr><td>客户经理</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓ 专属</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">🏆</div><p>全程陪跑<br>不是交付完就走</p></div>
+      <div class="guarantee-item"><div class="icon">📊</div><p>效果量化<br>数据说话</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>分阶段付款<br>满意再续</p></div>
+      <div class="guarantee-item"><div class="icon">🤝</div><p>长期合伙<br>共同成长</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 你的AI赋能合伙人<br>
+  不是卖工具，是帮你建立AI竞争力<br>
+  拍前请联系客服，预约 1v1 需求诊断（免费）
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">预约诊断</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即合作</a>
+</div>
+
+</div>
+</body>
+</html>

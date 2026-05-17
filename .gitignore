@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+._*
+
+# Obsidian
+.obsidian/
+
+# 内部运营 / 非站点文件
+*.pptx
+generate_ppt.py
+README-上架指南.md
+
+# 编辑器
+.vscode/
+.idea/
+*.swp

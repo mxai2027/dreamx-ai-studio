@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>传统行业AI升级方案 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #0c0c1d 0%, #1b2838 50%, #2d4059 100%); color: #fff; padding: 40px 30px; }
+.product-header .tag { display: inline-block; background: #ff6348; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #ff6348; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; cursor: pointer; }
+.sku-item:hover, .sku-item.active { border-color: #ff6348; color: #ff6348; background: #fff5f0; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section:last-child { border-bottom: none; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #ff6348; }
+.section-title span { color: #ff6348; }
+/* 行业卡片 */
+.industry-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.industry-card { background: linear-gradient(135deg, #f8f9ff, #eef2ff); border-radius: 12px; padding: 16px 12px; text-align: center; }
+.industry-card .icon { font-size: 32px; margin-bottom: 6px; }
+.industry-card h4 { font-size: 13px; margin-bottom: 4px; }
+.industry-card p { font-size: 11px; color: #888; }
+/* 痛点 */
+.pain-list { list-style: none; }
+.pain-list li { padding: 14px 0; border-bottom: 1px dashed #f0f0f0; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
+.pain-list li:last-child { border-bottom: none; }
+.pain-list .x { color: #ff4757; font-size: 18px; flex-shrink: 0; }
+.pain-list .arrow { color: #2ed573; font-size: 14px; flex-shrink: 0; }
+/* 方案 */
+.solution-card { background: #f8f9ff; border-radius: 12px; padding: 20px; margin-bottom: 12px; border-left: 4px solid #ff6348; }
+.solution-card h4 { font-size: 15px; margin-bottom: 6px; color: #1a1a2e; }
+.solution-card p { font-size: 13px; color: #666; line-height: 1.8; }
+.solution-card .result { color: #ff6348; font-weight: 600; }
+/* 流程 */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 2px; background: #eee; }
+.timeline-item { position: relative; padding: 16px 0; }
+.timeline-item::before { content: ''; position: absolute; left: -22px; top: 22px; width: 12px; height: 12px; border-radius: 50%; background: #ff6348; border: 3px solid #fff; box-shadow: 0 0 0 2px #ff6348; }
+.timeline-item h4 { font-size: 15px; margin-bottom: 4px; }
+.timeline-item p { font-size: 13px; color: #888; }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #0c0c1d; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #ff6348, #ff7979); color: #fff; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; cursor: pointer; }
+.cta-bar .btn-outline { background: none; border: 2px solid #ff6348; color: #ff6348; padding: 10px 24px; border-radius: 24px; font-size: 14px; cursor: pointer; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">行业AI升级</span>
+  <h1>传统行业AI化升级方案 餐饮/零售/教育/制造 一对一诊断+落地 全程陪跑</h1>
+  <div class="subtitle">不懂技术也能用AI降本增效，从诊断到落地全程陪跑</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择服务版本</h3>
+  <div class="sku-item active">诊断报告</div>
+  <div class="sku-item">单场景落地</div>
+  <div class="sku-item">全面升级</div>
+  <div class="sku-item">年度陪跑</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="section-title">覆盖<span>行业</span></div>
+    <div class="industry-grid">
+      <div class="industry-card"><div class="icon">🍜</div><h4>餐饮</h4><p>智能点餐/库存</p></div>
+      <div class="industry-card"><div class="icon">🛍️</div><h4>零售</h4><p>选品/客服/文案</p></div>
+      <div class="industry-card"><div class="icon">📚</div><h4>教育</h4><p>AI助教/批改</p></div>
+      <div class="industry-card"><div class="icon">🏭</div><h4>制造</h4><p>质检/工单/报表</p></div>
+      <div class="industry-card"><div class="icon">🏥</div><h4>医疗</h4><p>问诊分诊/病历</p></div>
+      <div class="industry-card"><div class="icon">⚖️</div><h4>法律</h4><p>合同审查/检索</p></div>
+      <div class="industry-card"><div class="icon">🏠</div><h4>房产</h4><p>智能推荐/文案</p></div>
+      <div class="industry-card"><div class="icon">💄</div><h4>美业</h4><p>预约/客户管理</p></div>
+      <div class="industry-card"><div class="icon">🚛</div><h4>物流</h4><p>调度/单据识别</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">你的<span>痛点</span>，我们懂</div>
+    <ul class="pain-list">
+      <li><span class="x">✗</span>想用AI但不知道从哪切入<br><span class="arrow">→</span> 我们做行业诊断，找到ROI最高的切入点</li>
+      <li><span class="x">✗</span>试过ChatGPT但跟业务没结合<br><span class="arrow">→</span> 定制Prompt工作流，嵌入你的真实业务场景</li>
+      <li><span class="x">✗</span>担心数据安全、员工不会用<br><span class="arrow">→</span> 本地部署+员工培训+操作手册一站式交付</li>
+      <li><span class="x">✗</span>花了钱没效果、不知道怎么评估<br><span class="arrow">→</span> 量化指标前后对比，效果不达标可退款</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">落地<span>案例</span></div>
+    <div class="solution-card">
+      <h4>🍜 某连锁面馆 — AI智能库存管理</h4>
+      <p>痛点：每天凭经验备货，食材浪费率高达 15%。<br>
+      方案：接入历史销售数据 + 天气/节假日因子，用AI预测每日用量。<br>
+      <span class="result">结果：食材浪费率从 15% 降至 4%，月省 8000+</span></p>
+    </div>
+    <div class="solution-card">
+      <h4>🛍️ 某母婴店 — AI朋友圈文案批量生产</h4>
+      <p>痛点：老板一个人写文案，每天耗时 2 小时。<br>
+      方案：搭建产品知识库 + Prompt模板，一键生成带货文案。<br>
+      <span class="result">结果：文案产出从 3 条/天提升至 20 条/天，节省 90% 时间</span></p>
+    </div>
+    <div class="solution-card">
+      <h4>⚖️ 某律所 — AI合同审查助手</h4>
+      <p>痛点：实习律师审合同漏洞多，合伙人复核负担重。<br>
+      方案：本地部署大模型 + 合同条款知识库，AI初审后人工复核。<br>
+      <span class="result">结果：审查效率提升 3 倍，漏审率下降 70%</span></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>流程</span></div>
+    <div class="timeline">
+      <div class="timeline-item"><h4>行业诊断（1-3天）</h4><p>深入了解业务流程，找出 AI 可切入的高价值环节</p></div>
+      <div class="timeline-item"><h4>方案设计（3-5天）</h4><p>出具定制化 AI 升级方案，含投入产出预估</p></div>
+      <div class="timeline-item"><h4>工具落地（5-15天）</h4><p>搭建AI工具/工作流，配置到业务系统中</p></div>
+      <div class="timeline-item"><h4>员工培训（1-2天）</h4><p>手把手教会团队使用，交付操作手册</p></div>
+      <div class="timeline-item"><h4>持续优化（按版本）</h4><p>跟踪使用效果，持续迭代 Prompt 和工作流</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">📋</div><p>诊断报告<br>不满意退款</p></div>
+      <div class="guarantee-item"><div class="icon">🎯</div><p>效果量化<br>数据说话</p></div>
+      <div class="guarantee-item"><div class="icon">👨‍🏫</div><p>员工培训<br>包教包会</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>持续迭代<br>长期陪跑</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 传统行业的AI升级合伙人<br>
+  拍前请联系客服，描述您的行业和需求<br>
+  我们会在 24 小时内给出初步方案建议
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">免费咨询</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即购买</a>
+</div>
+
+</div>
+</body>
+</html>

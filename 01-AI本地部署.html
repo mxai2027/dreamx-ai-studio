@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI本地部署服务 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+/* 商品头部 */
+.product-header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 30px; }
+.product-header .tag { display: inline-block; background: #e94560; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+/* 价格区 */
+.price-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #e94560; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+/* SKU */
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.sku-item:hover, .sku-item.active { border-color: #e94560; color: #e94560; background: #fff1f0; }
+/* 详情页 */
+.detail { padding: 0; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section:last-child { border-bottom: none; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #e94560; }
+.section-title span { color: #e94560; }
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.feature-card { background: #f8f9ff; border-radius: 12px; padding: 20px; text-align: center; }
+.feature-card .icon { font-size: 36px; margin-bottom: 8px; }
+.feature-card h4 { font-size: 15px; margin-bottom: 6px; }
+.feature-card p { font-size: 12px; color: #888; }
+/* 流程 */
+.step-flow { display: flex; flex-direction: column; gap: 0; }
+.step { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; }
+.step-num { width: 36px; height: 36px; background: linear-gradient(135deg, #e94560, #ff6b6b); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+.step-content h4 { font-size: 15px; margin-bottom: 4px; }
+.step-content p { font-size: 13px; color: #888; }
+/* 对比表 */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th { background: #1a1a2e; color: #fff; padding: 12px 8px; text-align: center; }
+.compare-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+.compare-table tr:nth-child(even) { background: #fafafa; }
+.compare-table .highlight { background: #fff1f0; }
+.check { color: #52c41a; font-weight: 700; }
+.cross { color: #ccc; }
+/* 案例 */
+.case-card { background: #f8f9ff; border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+.case-card .label { display: inline-block; background: #e94560; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 8px; margin-bottom: 8px; }
+.case-card h4 { font-size: 15px; margin-bottom: 6px; }
+.case-card p { font-size: 13px; color: #666; line-height: 1.6; }
+/* 保障 */
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+/* 底部 */
+.footer { background: #1a1a2e; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; cursor: pointer; }
+.cta-bar .btn-outline { background: none; border: 2px solid #e94560; color: #e94560; padding: 10px 24px; border-radius: 24px; font-size: 14px; cursor: pointer; margin-right: 12px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<!-- 商品头部 -->
+<div class="product-header">
+  <span class="tag">梦曦AI工作室</span>
+  <h1>AI大模型本地私有化部署 企业级/个人电脑 一对一远程安装调试 全程陪跑</h1>
+  <div class="subtitle">DeepSeek / Qwen / Llama / Gemma 本地运行，数据不出门</div>
+</div>
+
+<!-- 价格 -->
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<!-- SKU -->
+<div class="sku-section">
+  <h3>选择服务版本</h3>
+  <div class="sku-item active">基础版</div>
+  <div class="sku-item">专业版</div>
+  <div class="sku-item">企业版</div>
+  <div class="sku-item">旗舰陪跑</div>
+</div>
+
+<!-- 详情页开始 -->
+<div class="detail">
+
+  <!-- 卖点 -->
+  <div class="section">
+    <div class="section-title">你的 AI，<span>跑在自己电脑上</span></div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h4>数据零泄露</h4>
+        <p>所有对话数据留在本地<br>无需联网即可运行</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💰</div>
+        <h4>零月费</h4>
+        <p>一次部署永久使用<br>告别API按量付费</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h4>响应极速</h4>
+        <p>本地推理无网络延迟<br>离线也能用</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎯</div>
+        <h4>定制自由</h4>
+        <p>可微调训练专属模型<br>适配你的业务场景</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKU 对比 -->
+  <div class="section">
+    <div class="section-title">版本<span>对比</span></div>
+    <table class="compare-table">
+      <tr><th>服务内容</th><th>基础版</th><th>专业版</th><th class="highlight">企业版</th><th>旗舰陪跑</th></tr>
+      <tr><td>远程一对一部署</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>模型数量</td><td>1个</td><td>3个</td><td>5个</td><td>不限</td></tr>
+      <tr><td>WebUI 界面安装</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>知识库搭建(RAG)</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>API接口对接</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>微调训练指导</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>售后答疑</td><td>7天</td><td>30天</td><td>90天</td><td>365天</td></tr>
+      <tr><td>陪跑社群</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+    </table>
+  </div>
+
+  <!-- 服务流程 -->
+  <div class="section">
+    <div class="section-title">服务<span>流程</span></div>
+    <div class="step-flow">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><h4>需求沟通</h4><p>了解你的硬件配置、使用场景、模型需求</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><h4>环境检测</h4><p>远程检查电脑配置，确认可运行的模型规格</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><h4>远程部署</h4><p>一对一远程安装 Ollama/vLLM + WebUI，下载模型</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content"><h4>调试验收</h4><p>现场测试对话效果，调优参数，确保流畅运行</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content"><h4>交付文档</h4><p>交付使用手册 + 常见问题文档 + 售后群</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 案例 -->
+  <div class="section">
+    <div class="section-title">客户<span>案例</span></div>
+    <div class="case-card">
+      <span class="label">律师事务所</span>
+      <h4>某律所 — Mac Studio 部署 Qwen 72B</h4>
+      <p>客户痛点：案件资料涉密，不能上传云端AI。我们帮助在 Mac Studio M2 Ultra 上部署了 Qwen-72B 量化版 + RAG 知识库，实现合同审查、案例检索本地化，处理速度提升 5 倍。</p>
+    </div>
+    <div class="case-card">
+      <span class="label">跨境电商</span>
+      <h4>某跨境卖家 — 多语言客服本地化</h4>
+      <p>客户痛点：每月 API 费用超 3000 元。我们在其办公室 N100 小主机上部署 Gemma-4 模型，实现英/日/韩多语言客服回复生成，月费降为 0。</p>
+    </div>
+    <div class="case-card">
+      <span class="label">自媒体</span>
+      <h4>某自媒体博主 — 个人电脑跑 DeepSeek</h4>
+      <p>客户痛点：想用AI辅助写稿但担心选题泄露。30 分钟远程部署 DeepSeek-R1 14B，配合 Open WebUI 实现本地写作助手，已稳定使用 3 个月。</p>
+    </div>
+  </div>
+
+  <!-- 硬件要求 -->
+  <div class="section">
+    <div class="section-title">硬件<span>要求</span></div>
+    <table class="compare-table">
+      <tr><th>模型规格</th><th>最低配置</th><th>推荐配置</th></tr>
+      <tr><td>7B 小模型</td><td>8G内存 / 无显卡</td><td>16G内存 / 6G显存</td></tr>
+      <tr><td>14B 中模型</td><td>16G内存 / 8G显存</td><td>32G内存 / 12G显存</td></tr>
+      <tr><td>70B+ 大模型</td><td>64G内存 / 24G显存</td><td>Mac Studio 96G+</td></tr>
+    </table>
+    <p style="font-size:12px;color:#999;margin-top:12px;text-align:center;">不确定你的电脑能跑什么模型？拍前联系客服免费检测</p>
+  </div>
+
+  <!-- 保障 -->
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">🛡️</div><p>部署不成功<br>全额退款</p></div>
+      <div class="guarantee-item"><div class="icon">💬</div><p>一对一<br>远程服务</p></div>
+      <div class="guarantee-item"><div class="icon">📖</div><p>交付文档<br>可复查</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>售后答疑<br>有保障</p></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 底部 -->
+<div class="footer">
+  梦曦AI工作室 — 让每个人都能拥有自己的AI<br>
+  拍前请联系客服确认需求和硬件配置<br>
+  服务时间：周一至周日 9:00-22:00
+</div>
+
+<!-- 底部CTA -->
+<div class="cta-bar">
+  <div>
+    <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">咨询客服</a>
+  </div>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即购买</a>
+</div>
+
+</div>
+</body>
+</html>

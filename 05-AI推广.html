@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI推广代运营 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #4a4a4a 100%); color: #fff; padding: 40px 30px; }
+.tag { display: inline-block; background: #f59e0b; color: #000; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; font-weight: 700; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #fffbeb, #fef3c7); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #d97706; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; }
+.sku-item.active { border-color: #d97706; color: #d97706; background: #fffbeb; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #f59e0b; }
+.section-title span { color: #d97706; }
+.pkg-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.pkg-card { border: 2px solid #f0f0f0; border-radius: 16px; overflow: hidden; }
+.pkg-card.featured { border-color: #f59e0b; }
+.pkg-header { padding: 16px 20px; background: #fafafa; display: flex; justify-content: space-between; align-items: center; }
+.pkg-card.featured .pkg-header { background: linear-gradient(90deg, #f59e0b, #fbbf24); color: #000; }
+.pkg-header h4 { font-size: 16px; }
+.pkg-header .price-tag { font-size: 20px; font-weight: 700; }
+.pkg-body { padding: 16px 20px; }
+.pkg-body ul { list-style: none; }
+.pkg-body li { padding: 6px 0; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+.pkg-body li::before { content: '✓'; color: #f59e0b; font-weight: 700; }
+.vs-section { background: #1a1a1a; color: #fff; padding: 30px; text-align: center; }
+.vs-section h3 { font-size: 18px; margin-bottom: 20px; }
+.vs-row { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 12px; }
+.vs-item { flex: 1; text-align: center; padding: 12px; border-radius: 8px; }
+.vs-item.old { background: rgba(255,255,255,0.05); }
+.vs-item.new { background: rgba(245,158,11,0.2); border: 1px solid #f59e0b; }
+.vs-item .label { font-size: 12px; color: #999; margin-bottom: 4px; }
+.vs-item .value { font-size: 16px; font-weight: 600; }
+.vs-item.new .value { color: #fbbf24; }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #1a1a1a; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #d97706, #f59e0b); color: #000; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; }
+.cta-bar .btn-outline { background: none; border: 2px solid #d97706; color: #d97706; padding: 10px 24px; border-radius: 24px; font-size: 14px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">AI推广</span>
+  <h1>AI推广代运营 小红书/抖音/公众号 内容策划+AI生产+数据优化 月度服务</h1>
+  <div class="subtitle">你提供产品，我们用AI帮你持续出内容、涨粉、获客</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择服务套餐</h3>
+  <div class="sku-item active">入门版</div>
+  <div class="sku-item">标准版</div>
+  <div class="sku-item">旗舰版</div>
+  <div class="sku-item">年度合约</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="section-title">套餐<span>详情</span></div>
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="pkg-header"><h4>入门版</h4><span class="price-tag">询价</span></div>
+        <div class="pkg-body"><ul>
+          <li>1个平台代运营</li>
+          <li>AI生成 30 篇/月图文内容</li>
+          <li>选题策划 + 标题优化</li>
+          <li>月度数据报告 1 份</li>
+          <li>适合：个人IP起步期</li>
+        </ul></div>
+      </div>
+      <div class="pkg-card featured">
+        <div class="pkg-header"><h4>标准版（推荐）</h4><span class="price-tag">询价</span></div>
+        <div class="pkg-body"><ul>
+          <li>2个平台代运营</li>
+          <li>AI生成 60 篇/月图文 + 15 条短视频脚本</li>
+          <li>AI封面/配图生成</li>
+          <li>评论区互动话术</li>
+          <li>私域引流文案设计</li>
+          <li>双周数据复盘 + 策略调整</li>
+          <li>适合：中小企业品牌推广</li>
+        </ul></div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-header"><h4>旗舰版</h4><span class="price-tag">询价</span></div>
+        <div class="pkg-body"><ul>
+          <li>全平台代运营（小红书+抖音+公众号+视频号）</li>
+          <li>AI生成 120 篇/月内容 + 30 条视频脚本</li>
+          <li>短视频拍摄指导 + AI剪辑方案</li>
+          <li>竞品监控 + AI分析报告</li>
+          <li>私域SOP全套设计</li>
+          <li>每周数据复盘 + 1v1策略会</li>
+          <li>适合：品牌快速起量期</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-section">
+    <h3>传统代运营 vs AI代运营</h3>
+    <div class="vs-row">
+      <div class="vs-item old"><div class="label">传统内容产出</div><div class="value">10篇/月</div></div>
+      <div style="color:#f59e0b;font-size:20px;">→</div>
+      <div class="vs-item new"><div class="label">AI内容产出</div><div class="value">60-120篇/月</div></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-item old"><div class="label">传统代运营费用</div><div class="value">行业高位</div></div>
+      <div style="color:#f59e0b;font-size:20px;">→</div>
+      <div class="vs-item new"><div class="label">AI代运营费用</div><div class="value">行业 1/5 起</div></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-item old"><div class="label">传统响应速度</div><div class="value">1-3天出稿</div></div>
+      <div style="color:#f59e0b;font-size:20px;">→</div>
+      <div class="vs-item new"><div class="label">AI响应速度</div><div class="value">当天出稿</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">📝</div><p>内容原创<br>查重保证</p></div>
+      <div class="guarantee-item"><div class="icon">📊</div><p>数据透明<br>周报/月报</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>不满意<br>免费修改</p></div>
+      <div class="guarantee-item"><div class="icon">💰</div><p>首月不满意<br>全额退款</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 用AI做推广，花小钱办大事<br>
+  拍前联系客服，免费获取您行业的推广方案
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">免费方案</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即合作</a>
+</div>
+
+</div>
+</body>
+</html>

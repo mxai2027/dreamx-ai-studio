@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI内容批量生产 — 梦曦AI工作室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+.page { max-width: 750px; margin: 0 auto; background: #fff; }
+.product-header { background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%); color: #fff; padding: 40px 30px; }
+.tag { display: inline-block; background: #34d399; color: #064e3b; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 12px; font-weight: 700; }
+.product-header h1 { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.product-header .subtitle { font-size: 14px; color: rgba(255,255,255,0.7); }
+.price-bar { background: linear-gradient(90deg, #ecfdf5, #d1fae5); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; }
+.price-bar .price { color: #059669; font-size: 32px; font-weight: 700; }
+.price-bar .price small { font-size: 16px; }
+.price-bar .original { color: #999; font-size: 14px; text-decoration: line-through; margin-left: 10px; }
+.price-bar .sales { float: right; color: #999; font-size: 13px; line-height: 42px; }
+.sku-section { padding: 20px 30px; border-bottom: 8px solid #f5f5f5; }
+.sku-section h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+.sku-item { display: inline-block; border: 1px solid #ddd; border-radius: 20px; padding: 8px 20px; margin: 4px 6px 4px 0; font-size: 13px; }
+.sku-item.active { border-color: #059669; color: #059669; background: #ecfdf5; }
+.section { padding: 30px; border-bottom: 1px solid #f0f0f0; }
+.section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-left: 12px; border-left: 4px solid #10b981; }
+.section-title span { color: #059669; }
+.content-types { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.type-card { background: #ecfdf5; border-radius: 12px; padding: 20px; text-align: center; }
+.type-card .icon { font-size: 36px; margin-bottom: 8px; }
+.type-card h4 { font-size: 14px; margin-bottom: 4px; }
+.type-card p { font-size: 12px; color: #888; }
+.workflow-step { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px dashed #e5e7eb; }
+.workflow-step:last-child { border-bottom: none; }
+.workflow-num { width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+.workflow-content h4 { font-size: 15px; margin-bottom: 3px; }
+.workflow-content p { font-size: 13px; color: #888; }
+.before-after { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+.ba-card { background: #f9fafb; border-radius: 12px; padding: 20px; text-align: center; }
+.ba-card.after { background: #ecfdf5; border: 2px solid #10b981; }
+.ba-card h4 { font-size: 14px; margin-bottom: 8px; color: #666; }
+.ba-card .num { font-size: 28px; font-weight: 700; }
+.ba-card.after .num { color: #059669; }
+.ba-arrow { font-size: 24px; color: #10b981; }
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.compare-table th { background: #065f46; color: #fff; padding: 12px 8px; text-align: center; }
+.compare-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+.compare-table tr:nth-child(even) { background: #ecfdf5; }
+.check { color: #10b981; font-weight: 700; }
+.cross { color: #ccc; }
+.guarantee { display: flex; justify-content: space-around; text-align: center; padding: 20px 0; }
+.guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
+.guarantee-item p { font-size: 12px; color: #666; }
+.footer { background: #065f46; color: rgba(255,255,255,0.6); padding: 30px; text-align: center; font-size: 12px; line-height: 2; }
+.cta-bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid #eee; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; }
+.cta-bar .btn { background: linear-gradient(90deg, #059669, #10b981); color: #fff; border: none; padding: 12px 36px; border-radius: 24px; font-size: 16px; font-weight: 700; }
+.cta-bar .btn-outline { background: none; border: 2px solid #059669; color: #059669; padding: 10px 24px; border-radius: 24px; font-size: 14px; }
+
+/* 站点导航 */
+.site-nav { background: #0d0d1a; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { font-weight: 700; letter-spacing: 0.5px; }
+.site-nav .brand small { color: rgba(255,255,255,0.5); font-weight: 400; margin-left: 6px; font-size: 11px; }
+.site-nav .back { color: rgba(255,255,255,0.7); font-size: 12px; }
+.site-nav .back:hover { color: #e94560; }
+.site-nav .domain { color: #e94560; font-weight: 700; letter-spacing: 1px; }
+
+/* 询价按钮 */
+.inq-bar { background: linear-gradient(90deg, #fff1f0, #fff7e6); padding: 20px 30px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+.inq-bar .inq-hint { color: #888; font-size: 13px; }
+.inq-bar .inq-hint b { color: #e94560; font-size: 15px; font-weight: 700; margin-right: 4px; }
+.inq-btn { display: inline-block; background: linear-gradient(90deg, #e94560, #ff6b6b); color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(233,69,96,0.25); }
+.inq-btn:hover { transform: translateY(-1px); }
+.inq-tag { color: #e94560; font-size: 11px; font-weight: 700; margin-left: 2px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 站点导航 -->
+<div class="site-nav">
+  <a class="back" href="index.html">← 返回主页</a>
+  <div class="brand">梦曦AI科技工作室 <small>梦曦.中国</small></div>
+  <div class="domain">/</div>
+</div>
+
+
+<div class="product-header">
+  <span class="tag">AI内容工厂</span>
+  <h1>AI内容批量生产工作流搭建 图文/视频脚本/文案 Prompt模板定制 一键批量出稿</h1>
+  <div class="subtitle">从 1 天写 3 篇，到 1 小时出 30 篇，质量不降反升</div>
+</div>
+
+<div class="inq-bar">
+  <div class="inq-hint"><b>询价咨询</b>多套餐可选 · 拍前必看</div>
+  <a class="inq-btn" href="#contact">立即询价</a>
+</div>
+
+<div class="sku-section">
+  <h3>选择服务版本</h3>
+  <div class="sku-item active">Prompt模板包</div>
+  <div class="sku-item">定制工作流</div>
+  <div class="sku-item">全自动流水线</div>
+  <div class="sku-item">企业内容中台</div>
+</div>
+
+<div class="detail">
+
+  <div class="section">
+    <div class="section-title">支持<span>内容类型</span></div>
+    <div class="content-types">
+      <div class="type-card"><div class="icon">📕</div><h4>小红书笔记</h4><p>种草文/测评/攻略<br>含标题+正文+标签</p></div>
+      <div class="type-card"><div class="icon">🎬</div><h4>短视频脚本</h4><p>口播/剧情/教程<br>含分镜+台词+字幕</p></div>
+      <div class="type-card"><div class="icon">💬</div><h4>公众号推文</h4><p>深度文/干货/故事<br>含排版建议</p></div>
+      <div class="type-card"><div class="icon">🛒</div><h4>电商文案</h4><p>详情页/主图文案<br>卖点提炼+痛点击穿</p></div>
+      <div class="type-card"><div class="icon">📧</div><h4>私域话术</h4><p>朋友圈/群发/1v1<br>SOP自动化文案</p></div>
+      <div class="type-card"><div class="icon">🎙️</div><h4>播客/音频稿</h4><p>对谈稿/独白稿<br>含时间轴标记</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">工作流<span>演示</span></div>
+    <div class="workflow-step">
+      <div class="workflow-num">1</div>
+      <div class="workflow-content"><h4>输入选题关键词</h4><p>例："母婴辅食 6个月 米粉推荐"</p></div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">2</div>
+      <div class="workflow-content"><h4>AI生成 10 个标题方案</h4><p>自动匹配爆款标题公式，带数据预估</p></div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">3</div>
+      <div class="workflow-content"><h4>选定标题，一键生成正文</h4><p>自动套用你的品牌语气和行业话术</p></div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">4</div>
+      <div class="workflow-content"><h4>AI配图/封面建议</h4><p>生成配图Prompt或直接出图</p></div>
+    </div>
+    <div class="workflow-step">
+      <div class="workflow-num">5</div>
+      <div class="workflow-content"><h4>批量导出，直接发布</h4><p>支持 Markdown / 富文本 / 表格批量导出</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">效率<span>对比</span></div>
+    <div class="before-after">
+      <div class="ba-card"><h4>人工写稿</h4><div class="num">3篇/天</div><p style="font-size:12px;color:#999;margin-top:4px;">耗时 6 小时</p></div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-card after"><h4>AI工作流</h4><div class="num">30篇/天</div><p style="font-size:12px;color:#059669;margin-top:4px;">耗时 1 小时</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">版本<span>对比</span></div>
+    <table class="compare-table">
+      <tr><th>服务内容</th><th>模板包</th><th>定制流</th><th>流水线</th><th>内容中台</th></tr>
+      <tr><td>通用Prompt模板</td><td>10个</td><td>20个</td><td>30个</td><td>50个</td></tr>
+      <tr><td>行业定制Prompt</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>品牌语气微调</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>批量生成脚本</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>自动化Pipeline</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>团队多人使用</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
+      <tr><td>售后教学</td><td>视频教程</td><td>1v1 30分钟</td><td>1v1 60分钟</td><td>团队培训</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">服务<span>保障</span></div>
+    <div class="guarantee">
+      <div class="guarantee-item"><div class="icon">✍️</div><p>原创度<br>高于 90%</p></div>
+      <div class="guarantee-item"><div class="icon">🔄</div><p>模板不好用<br>免费调优</p></div>
+      <div class="guarantee-item"><div class="icon">📹</div><p>视频教程<br>包教包会</p></div>
+      <div class="guarantee-item"><div class="icon">💬</div><p>7天答疑<br>有问必答</p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  梦曦AI工作室 — 让AI帮你量产好内容<br>
+  让 AI 帮你把时间省回来
+</div>
+
+<div class="cta-bar">
+  <a class="btn-outline" href="https://mxai.taobao.com" target="_blank" rel="noopener">看案例</a>
+  <a class="btn" href="https://mxai.taobao.com" target="_blank" rel="noopener">立即购买</a>
+</div>
+
+</div>
+</body>
+</html>
