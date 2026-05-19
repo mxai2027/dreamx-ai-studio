@@ -20,6 +20,7 @@
 | `09-AI培训.html` | 企业 AI 培训陪跑 |
 | `10-AI全套方案.html` | 旗舰：从 0 到 1 全程陪跑 |
 | `11-具身智能人形机器人.html` | 具身智能人形机器人：机械手/仿真/数据采集/模型训练 |
+| `functions/api/embodied-plan.js` | Cloudflare Pages Functions/Workers API：具身智能项目评估器 |
 | `404.html` | 自定义 404 页 |
 | `sitemap.xml` · `robots.txt` | SEO 元信息（已用 punycode 域名） |
 
@@ -40,6 +41,12 @@
    - Build command: 留空
    - Build output directory: `/` (仓库根目录)
 4. **Custom domains** → Add → `梦曦.中国` + `www.梦曦.中国`（Cloudflare 会自动写入 CNAME，覆盖现有 A 记录）
+
+## 动态能力 (Cloudflare Workers)
+
+- `functions/api/embodied-plan.js` 会在 Cloudflare Pages 中自动部署为 Functions，底层运行在 Cloudflare Workers。
+- 前端栏目页调用同域接口：`POST /api/embodied-plan`。
+- 本地直接打开 HTML 时，评估器会使用前端备用逻辑；上线到 Pages 后优先使用 Workers API。
 
 ## License
 

@@ -83,6 +83,26 @@ a { text-decoration: none; color: inherit; }
 .scenario h4 { font-size: 14px; margin-bottom: 6px; color: #90e0ef; }
 .scenario p { font-size: 12px; color: rgba(255,255,255,0.68); line-height: 1.65; }
 
+.planner { background: #f8fbfc; border: 1px solid #dff3f8; border-radius: 12px; padding: 20px; }
+.planner-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field label { display: block; font-size: 12px; color: #66818c; margin-bottom: 6px; font-weight: 700; }
+.field select { width: 100%; border: 1px solid #d8e7ec; border-radius: 10px; padding: 11px 12px; background: #fff; color: #102a36; font-size: 13px; outline: none; }
+.field select:focus { border-color: #168aad; box-shadow: 0 0 0 3px rgba(22,138,173,0.12); }
+.planner-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; }
+.planner-status { color: #888; font-size: 12px; line-height: 1.6; }
+.planner-btn { border: none; background: linear-gradient(90deg, #168aad, #48cae4); color: #06131d; border-radius: 22px; padding: 11px 22px; font-weight: 800; cursor: pointer; white-space: nowrap; }
+.planner-result { display: none; margin-top: 16px; background: #fff; border-radius: 12px; padding: 18px; border: 1px solid #e7eef1; }
+.planner-result.show { display: block; }
+.result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; border-bottom: 1px dashed #e7eef1; padding-bottom: 12px; margin-bottom: 12px; }
+.result-head h4 { font-size: 16px; color: #102a36; margin-bottom: 5px; }
+.result-head p { font-size: 12px; color: #777; line-height: 1.7; }
+.readiness { min-width: 72px; height: 72px; border-radius: 50%; background: conic-gradient(#168aad var(--score), #edf5f7 0); display: flex; align-items: center; justify-content: center; color: #102a36; font-weight: 800; font-size: 18px; }
+.result-block { margin-top: 12px; }
+.result-block strong { display: block; color: #168aad; font-size: 13px; margin-bottom: 6px; }
+.result-block ul { margin-left: 18px; color: #666; font-size: 13px; line-height: 1.8; }
+.result-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.result-tags span { background: #eefcff; color: #168aad; border: 1px solid #dff3f8; border-radius: 14px; padding: 5px 10px; font-size: 11px; font-weight: 700; }
+
 .guarantee { display: flex; justify-content: space-around; text-align: center; padding: 18px 0 6px; }
 .guarantee-item .icon { font-size: 32px; margin-bottom: 6px; }
 .guarantee-item p { font-size: 12px; color: #666; line-height: 1.5; }
@@ -94,10 +114,10 @@ a { text-decoration: none; color: inherit; }
 
 @media (max-width: 520px) {
   .product-header h1 { font-size: 22px; }
-  .capability-grid, .scenario-grid { grid-template-columns: 1fr; }
+  .capability-grid, .scenario-grid, .planner-form { grid-template-columns: 1fr; }
   .guarantee { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .inq-bar, .cta-bar { align-items: stretch; flex-direction: column; }
-  .inq-btn, .cta-bar .btn, .cta-bar .btn-outline { text-align: center; width: 100%; }
+  .inq-bar, .cta-bar, .planner-actions, .result-head { align-items: stretch; flex-direction: column; }
+  .inq-btn, .cta-bar .btn, .cta-bar .btn-outline, .planner-btn { text-align: center; width: 100%; }
 }
 </style>
 </head>
@@ -237,6 +257,67 @@ a { text-decoration: none; color: inherit; }
   </div>
 
   <div class="section">
+    <div class="section-title">项目<span>评估器</span></div>
+    <div class="section-sub">前端展示在 Cloudflare Pages，评估逻辑由 Cloudflare Workers API 返回；静态预览时会自动使用本地备用逻辑。</div>
+    <div class="planner" id="robot-planner">
+      <form class="planner-form" id="planner-form">
+        <div class="field">
+          <label for="planner-team">团队类型</label>
+          <select id="planner-team" name="team">
+            <option value="lab">高校/科研实验室</option>
+            <option value="startup">机器人创业团队</option>
+            <option value="factory">制造/仓储企业</option>
+            <option value="ai-product">AI 产品团队</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="planner-scenario">目标场景</label>
+          <select id="planner-scenario" name="scenario">
+            <option value="dexterous-hand">灵巧手抓取/操作</option>
+            <option value="mobile-manipulation">移动操作/双臂协作</option>
+            <option value="warehouse">仓储分拣/上下料</option>
+            <option value="service">服务接待/导览交互</option>
+            <option value="inspection">巡检/质检/异常识别</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="planner-hardware">硬件状态</label>
+          <select id="planner-hardware" name="hardware">
+            <option value="none">暂无硬件</option>
+            <option value="sim-only">只做仿真验证</option>
+            <option value="arm">已有机械臂/夹爪</option>
+            <option value="humanoid">已有双臂/人形平台</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="planner-data">数据状态</label>
+          <select id="planner-data" name="data">
+            <option value="none">暂无数据</option>
+            <option value="sim">已有仿真数据</option>
+            <option value="teleop">已有遥操作轨迹</option>
+            <option value="real-mixed">已有真实多模态数据</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="planner-goal">当前目标</label>
+          <select id="planner-goal" name="goal">
+            <option value="diagnosis">先做可行性诊断</option>
+            <option value="simulation">搭建仿真环境</option>
+            <option value="dataset">建立数据采集流水线</option>
+            <option value="training">训练可部署策略</option>
+            <option value="demo">做可演示 Demo</option>
+          </select>
+        </div>
+      </form>
+      <div class="planner-actions">
+        <div class="planner-status" id="planner-status">选择条件后生成一份初步路线，方便拍前沟通。</div>
+        <button class="planner-btn" id="planner-submit" type="button">生成项目路线</button>
+      </div>
+      <div class="planner-result" id="planner-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">服务<span>保障</span></div>
     <div class="guarantee">
       <div class="guarantee-item"><div class="icon">📋</div><p>需求评估<br>先诊断再报价</p></div>
@@ -260,5 +341,153 @@ a { text-decoration: none; color: inherit; }
 </div>
 
 </div>
+
+<script>
+const plannerLabels = {
+  team: {
+    lab: "高校/科研实验室",
+    startup: "机器人创业团队",
+    factory: "制造/仓储企业",
+    "ai-product": "AI 产品团队"
+  },
+  scenario: {
+    "dexterous-hand": "灵巧手抓取/操作",
+    "mobile-manipulation": "移动操作/双臂协作",
+    warehouse: "仓储分拣/上下料",
+    service: "服务接待/导览交互",
+    inspection: "巡检/质检/异常识别"
+  },
+  hardware: {
+    none: "暂无硬件",
+    "sim-only": "只做仿真验证",
+    arm: "已有机械臂/夹爪",
+    humanoid: "已有双臂/人形平台"
+  },
+  data: {
+    none: "暂无数据",
+    sim: "已有仿真数据",
+    teleop: "已有遥操作轨迹",
+    "real-mixed": "已有真实多模态数据"
+  },
+  goal: {
+    diagnosis: "先做可行性诊断",
+    simulation: "搭建仿真环境",
+    dataset: "建立数据采集流水线",
+    training: "训练可部署策略",
+    demo: "做可演示 Demo"
+  }
+};
+
+document.getElementById("planner-submit").addEventListener("click", async () => {
+  const form = document.getElementById("planner-form");
+  const status = document.getElementById("planner-status");
+  const submit = document.getElementById("planner-submit");
+  const payload = Object.fromEntries(new FormData(form).entries());
+
+  status.textContent = "正在生成项目路线...";
+  submit.disabled = true;
+
+  try {
+    const response = await fetch("/api/embodied-plan", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) {
+      throw new Error(data.error || "接口暂时不可用");
+    }
+
+    renderPlan(data.plan, "Cloudflare Workers API");
+    status.textContent = "已由 Workers API 生成，可作为拍前沟通提纲。";
+  } catch (error) {
+    renderPlan(buildLocalPlan(payload), "本地备用逻辑");
+    status.textContent = "当前静态预览未连上 Workers，已使用本地备用逻辑。";
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+function buildLocalPlan(input) {
+  let readiness = 35;
+  if (input.hardware === "arm") readiness += 18;
+  if (input.hardware === "humanoid") readiness += 24;
+  if (input.hardware === "sim-only") readiness += 10;
+  if (input.data === "sim") readiness += 12;
+  if (input.data === "teleop") readiness += 18;
+  if (input.data === "real-mixed") readiness += 24;
+  if (input.goal === "diagnosis") readiness -= 5;
+  if (input.goal === "demo") readiness += 8;
+  if (input.scenario === "dexterous-hand") readiness -= 4;
+  readiness = Math.max(20, Math.min(readiness, 95));
+
+  const packageName = input.goal === "diagnosis" || readiness < 45
+    ? "诊断版"
+    : input.goal === "simulation" || input.hardware === "sim-only"
+      ? "仿真版"
+      : input.goal === "dataset" || input.data === "none"
+        ? "数据版"
+        : "全链路陪跑";
+  const modules = ["任务定义与技术路线诊断"];
+
+  if (["none", "sim-only"].includes(input.hardware) || input.goal === "simulation") modules.push("仿真环境与数字孪生搭建");
+  if (["none", "sim"].includes(input.data) || input.goal === "dataset") modules.push("多模态数据采集与清洗规范");
+  if (["teleop", "real-mixed"].includes(input.data) || input.scenario === "dexterous-hand") modules.push("遥操作示教系统与采集 SOP");
+  if (["training", "demo"].includes(input.goal)) modules.push("策略模型训练与评测闭环");
+  if (input.goal === "demo" || input.hardware === "humanoid") modules.push("实机部署、演示与交付文档");
+
+  return {
+    summary: `${plannerLabels.team[input.team]}适合从“${plannerLabels.goal[input.goal]}”切入，围绕“${plannerLabels.scenario[input.scenario]}”建立可复测的项目闭环。`,
+    packageName,
+    readiness,
+    labels: {
+      team: plannerLabels.team[input.team],
+      scenario: plannerLabels.scenario[input.scenario],
+      hardware: plannerLabels.hardware[input.hardware],
+      data: plannerLabels.data[input.data],
+      goal: plannerLabels.goal[input.goal]
+    },
+    modules: [...new Set(modules)],
+    timeline: packageName === "诊断版" ? "3-5 天输出路线图和预算边界" : "3-6 周完成核心模块交付",
+    risks: ["先固定任务边界、验收指标和数据格式，避免演示范围过大。"],
+    nextActions: ["整理机器人型号、机械手/夹爪型号、相机和算力配置。", "准备目标任务视频或参考动作，标出成功标准和失败案例。"]
+  };
+}
+
+function renderPlan(plan, source) {
+  const result = document.getElementById("planner-result");
+  result.classList.add("show");
+  result.innerHTML = `
+    <div class="result-head">
+      <div>
+        <h4>${escapeHtml(plan.packageName)} · ${escapeHtml(source)}</h4>
+        <p>${escapeHtml(plan.summary)}</p>
+        <div class="result-tags">
+          ${Object.values(plan.labels).map(label => `<span>${escapeHtml(label)}</span>`).join("")}
+        </div>
+      </div>
+      <div class="readiness" style="--score:${Number(plan.readiness)}%">${Number(plan.readiness)}%</div>
+    </div>
+    ${renderList("推荐模块", plan.modules)}
+    <div class="result-block"><strong>预计周期</strong><ul><li>${escapeHtml(plan.timeline)}</li></ul></div>
+    ${renderList("主要风险", plan.risks)}
+    ${renderList("下一步准备", plan.nextActions)}
+  `;
+}
+
+function renderList(title, items) {
+  return `<div class="result-block"><strong>${title}</strong><ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+</script>
 </body>
 </html>
