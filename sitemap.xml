@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   梦曦AI科技工作室 站点地图
-  域名: 梦曦.中国 (punycode: xn--8nvv2b.xn--fiqs8s)
+  域名: 梦曦.中国
   上线后请提交至: https://search.google.com/search-console
                   https://ziyuan.baidu.com/site/index
 -->
@@ -82,6 +82,13 @@
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://xn--8nvv2b.xn--fiqs8s/11-%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BA.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
